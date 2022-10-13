@@ -1,21 +1,17 @@
-name = "miniflare-typescript-esbuild-jest"
+name = "spotify-worker"
 main = "dist/index.mjs"
 compatibility_date = "2022-05-28"
 compatibility_flags = []
 
-[durable_objects]
-bindings = [
-  { name = "COUNTER", class_name = "Counter" }
-]
-
 [[migrations]]
 tag = "v1"
-new_classes = ["Counter"]
+new_classes = []
 
 [build]
 command = "node build.js"
 
-[miniflare]
-kv_persist = true
-cache_persist = true
-durable_objects_persist = true
+# The necessary secrets are:
+# - SPOTIFY_CLIENT_ID
+# - SPOTIFY_CLIENT_SECRET
+# - SPOTIFY_REFRESH_TOKEN
+# Run `echo <VALUE> | wrangler secret put <NAME>` for each of these
