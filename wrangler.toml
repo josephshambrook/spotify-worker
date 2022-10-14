@@ -1,11 +1,6 @@
 name = "spotify-worker"
 main = "dist/index.mjs"
 compatibility_date = "2022-05-28"
-compatibility_flags = []
-
-[[migrations]]
-tag = "v1"
-new_classes = []
 
 [build]
 command = "node build.js"

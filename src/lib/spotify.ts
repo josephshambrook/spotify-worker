@@ -1,17 +1,10 @@
-// import { Buffer } from 'buffer/';
-import { SpotifyAccessTokenResponse } from "../types/spotify";
-import { base64Encode } from "./base64";
+import { SpotifyAccessTokenResponse } from "../types";
 
 type getAccessTokenParams = {
   clientId: string;
   clientSecret: string;
   refreshToken: string;
 };
-
-// const basic = Buffer.from(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`).toString('base64');
-// const basic = new TextEncoder().encode(
-//   `${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`
-// );
 
 export const getAccessToken = ({
   clientId,
