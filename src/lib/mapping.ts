@@ -6,7 +6,7 @@ export const mapTracks = (
   return rawResponse.map((track) => ({
     name: track.name,
     artist: track.artists.map((artist) => artist.name).join(", "),
-    href: track.href,
+    href: track.external_urls.spotify,
     album: track.album.name,
     image: track.album.images[1],
   }));
