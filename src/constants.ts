@@ -1,3 +1,4 @@
+// TODO: Get these from env file or somewhere, rather than hardcoded
 export const CORS_WHITELIST = [
   /localhost/,
   /([a-z0-9]+[.])*josephshambrook[.]dev/,
