@@ -1,14 +1,10 @@
-import { getAccessToken } from "./lib/spotify";
 import { Router } from "itty-router";
+import { getAccessToken } from "./lib/spotify";
 import { mapTracks } from "./lib/mapping";
+import { getCorsHeaders } from "./helpers";
+import { CORS_WHITELIST } from "./constants";
 
 const router = Router();
-
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET,HEAD,POST,OPTIONS",
-  "Access-Control-Max-Age": "86400",
-};
 
 router.get("/top", async (request, env, context) => {
   const { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REFRESH_TOKEN } =
@@ -41,6 +37,8 @@ router.get("/top", async (request, env, context) => {
   ).then((r) => r.json());
 
   const mappedResponse = mapTracks(rawResponse.items);
+
+  const corsHeaders = getCorsHeaders(request, CORS_WHITELIST);
 
   return new Response(JSON.stringify(mappedResponse), {
     headers: {
