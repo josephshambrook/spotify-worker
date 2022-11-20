@@ -29,3 +29,32 @@ export const getAccessToken = ({
       return r as SpotifyAccessTokenResponse;
     });
 };
+
+type getTopTracksParams = {
+  accessToken: string;
+  type: string;
+  timeRange: string;
+  limit: string;
+  offset: string;
+};
+
+export const getTopTracks = ({
+  accessToken,
+  type,
+  timeRange,
+  limit,
+  offset,
+}: getTopTracksParams): Promise<SpotifyApi.UsersTopTracksResponse> => {
+  return fetch(
+    `https://api.spotify.com/v1/me/top/${type}?time_range=${timeRange}&limit=${limit}&offset=${offset}`,
+    {
+      cf: {
+        cacheTtl: 3600,
+        cacheEverything: true,
+      },
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  ).then((r) => r.json());
+};

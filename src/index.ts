@@ -1,6 +1,6 @@
-import { getAccessToken } from "./lib/spotify";
 import { Router } from "itty-router";
-import { mapTracks } from "./lib/mapping";
+import { getAccessToken, getTopTracks } from "./lib/spotify";
+import { mapTracks } from "./lib/utils";
 
 const router = Router();
 
@@ -22,23 +22,19 @@ router.get("/top", async (request, env, context) => {
 
   const url = new URL(request.url);
 
+  // all search parameter options
   const type = url.searchParams.get("type") ?? "tracks";
-  const time_range = url.searchParams.get("time_range") ?? "short_term";
+  const timeRange = url.searchParams.get("time_range") ?? "short_term";
   const limit = url.searchParams.get("limit") ?? "20";
   const offset = url.searchParams.get("offset") ?? "0";
 
-  const rawResponse: SpotifyApi.UsersTopTracksResponse = await fetch(
-    `https://api.spotify.com/v1/me/top/${type}?time_range=${time_range}&limit=${limit}&offset=${offset}`,
-    {
-      cf: {
-        cacheTtl: 3600,
-        cacheEverything: true,
-      },
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-    }
-  ).then((r) => r.json());
+  const rawResponse = await getTopTracks({
+    accessToken: access_token,
+    type,
+    timeRange,
+    limit,
+    offset,
+  });
 
   const mappedResponse = mapTracks(rawResponse.items);
 
